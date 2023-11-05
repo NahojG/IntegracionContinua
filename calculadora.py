@@ -1,8 +1,7 @@
-# Asumiendo que los módulos derivadas, integrales, limites, y distribucion están en el mismo directorio
-from derivadas import Derivada
-from integrales import Integral
-from limites import Limite
-from distribucion import DistribucionBinomial, DistribucionPoisson, DistribucionNormal
+from funciones.derivadas import Derivada
+from funciones.integrales import Integral
+from funciones.limites import Limite
+from funciones.distribucion import DistribucionBinomial, DistribucionPoisson, DistribucionNormal
 
 class CalculadoraMatematica:
     """
