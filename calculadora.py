@@ -110,5 +110,3 @@ class CalculadoraMatematica:
             'pdf': dist.pdf(x),
             'cdf': dist.cdf(x)
         }
-
-# Aquí se podrían agregar ejemplos de uso de la clase CalculadoraMatematica si se necesita.
