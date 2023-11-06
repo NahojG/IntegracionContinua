@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Matemática</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Calculadora Matemática</h1>
+
+    <div>
+        <h2>Calcular Derivada</h2>
+        <p>Función: f(x) = <input type="text" id="funcion_derivada" placeholder="e.g., x^2"></p>
+        <p>Variable: <input type="text" id="variable_derivada" placeholder="e.g., x"></p>
+        <p>Punto: <input type="text" id="punto_derivada" placeholder="Opcional"></p>
+        <button onclick="calcularDerivada()">Calcular Derivada</button>
+        <p>Resultado: <span id="resultado_derivada"></span></p>
+    </div>
+
+    <div>
+        <h2>Calcular Integral</h2>
+        <p>Función: f(x) = <input type="text" id="funcion_integral" placeholder="e.g., x^2"></p>
+        <p>Variable: <input type="text" id="variable_integral" placeholder="e.g., x"></p>
+        <p>Límite Inferior: <input type="text" id="limite_inferior" placeholder="e.g., 0"></p>
+        <p>Límite Superior: <input type="text" id="limite_superior" placeholder="e.g., 1"></p>
+        <button onclick="calcularIntegral()">Calcular Integral</button>
+        <p>Resultado: <span id="resultado_integral"></span></p>
+    </div>
+
+    <script>
+        function calcularDerivada() {
+            var funcion = $('#funcion_derivada').val();
+            var variable = $('#variable_derivada').val();
+            var punto = $('#punto_derivada').val();
+
+            $.ajax({
+                url: 'http://127.0.0.1:5000/calcular_derivada',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ funcion: funcion, variable: variable, punto: punto }),
+                success: function(response) {
+                    $('#resultado_derivada').text(response.resultado);
+                },
+                error: function(error) {
+                    console.log(error);
+                    var errorMessage = error.responseJSON && error.responseJSON.error ? error.responseJSON.error : 'Ocurrió un error al procesar su solicitud.';
+                    alert(errorMessage);
+                }
+            });
+        }
+
+        function calcularIntegral() {
+            var funcion = $('#funcion_integral').val();
+            var variable = $('#variable_integral').val();
+            var limiteInferior = $('#limite_inferior').val();
+            var limiteSuperior = $('#limite_superior').val();
+
+            $.ajax({
+                url: 'http://127.0.0.1:5000/calcular_integral',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    funcion: funcion,
+                    variable: variable,
+                    limite_inferior: limiteInferior,
+                    limite_superior: limiteSuperior
+                }),
+                success: function(response) {
+                    $('#resultado_integral').text(response.resultado);
+                },
+                error: function(error) {
+                    console.log(error);
+                    alert("Error al calcular la integral");
+                }
+            });
+        }
+    </script>
+</body>
+</html>
